@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <link rel="stylesheet" href="/public/css/styles.css" type="text/css">
+    <title>Página Inicial</title>
+</head>
+
+<body>
+    <header>Cadastro</header>
+    <form action="./dashboard" method="post">
+        <div class="input_custom">
+            <label for="name">Nome:</label>
+            <input id="name" type="text" name="name" />
+        </div>
+        <div class="input_custom">
+            <label for="lastName">Sobrenome:</label>
+            <input id="lastName" type="text" name="lastName" />
+        </div>
+        <div class="input_custom">
+            <label for="email">Email:</label>
+            <input id="email" type="text" name="email" />
+        </div>
+        <button class="btn_cadastrar" type="submit" onsubmit="createUser()">Cadastrar</button>
+    </form>
+    <script src="../controllers/index.js"></script>
+</body>
+
+</html>
