@@ -15,7 +15,7 @@ app.get('/sign-up', (req, res) => {
     res.render('./sign-up.ejs')
 })
 
-app.post('/dashboard', methods.createUser)
+app.post('/user', methods.createUser);
 
 
 app.listen(5000, () => {

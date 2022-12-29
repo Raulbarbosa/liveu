@@ -4,29 +4,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/public/css/styles.css" type="text/css">
     <title>Página Inicial</title>
 </head>
 
 <body>
     <header>Cadastro</header>
-    <form action="./dashboard" method="post">
+    <form id="formAdd">
         <div class="input_custom">
             <label for="name">Nome:</label>
-            <input id="name" type="text" name="name" />
+            <input id="name" type="text" name="name" required />
         </div>
         <div class="input_custom">
             <label for="lastName">Sobrenome:</label>
-            <input id="lastName" type="text" name="lastName" />
+            <input id="lastName" type="text" name="lastName" required />
         </div>
         <div class="input_custom">
             <label for="email">Email:</label>
-            <input id="email" type="text" name="email" />
+            <input id="email" type="text" name="email" required />
         </div>
-        <button class="btn_cadastrar" type="submit" onsubmit="createUser()">Cadastrar</button>
+        <button class="btn_cadastrar" type="submit" id="btn-cadastrar">Cadastrar</button>
     </form>
-    <script src="../controllers/index.js"></script>
+    <div class="result">
+        <ul class="result-intern">
+            <li>
+                <strong> Animal:</strong>
+                <span id="animal-content"></span>
+            </li>
+            <li>
+                <strong>Cor:</strong>
+                <span id="cor-content"></span>
+            </li>
+            <li>
+                <strong>País:</strong>
+                <span id="pais-content"></span>
+            </li>
+        </ul>
+    </div>
+    <script>
+        $('#formAdd').submit(async (e) => {
+            e.preventDefault();
+            const nameValue = document.getElementById('name').value;
+            const lastNameValue = document.getElementById('lastName').value;
+            const emailValue = document.getElementById('email').value;
+
+            if (!nameValue || !lastNameValue || !emailValue) {
+                return
+            }
+
+            const data = {
+                nome: nameValue,
+                sobrenome: lastNameValue,
+                email: emailValue
+            }
+
+            const response = await $.ajax({
+                type: "POST",
+                url: "http://138.68.29.250:8082/",
+                data: data,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+
+            const array = response.split('#');
+
+            const newData = {
+                nome: {
+                    nome: data.nome,
+                    cod: Number(array[1])
+                },
+                sobrenome: {
+                    sobrenome: data.sobrenome,
+                    cod: Number(array[3])
+                },
+                email: {
+                    email: data.email,
+                    cod: Number(array[5])
+                }
+            }
+
+            const result = await $.ajax({
+                type: "POST",
+                url: "http://localhost:5000/user",
+                data: JSON.stringify(newData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            await $('#animal-content').text(result.animal);
+            await $('#cor-content').text(result.cor);
+            await $('#pais-content').text(result.pais);
+
+        })
+    </script>
 </body>
 
 </html>

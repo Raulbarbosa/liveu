@@ -80,3 +80,24 @@ form input {
     background: #bbbbbb;
     cursor: pointer;
 }
+
+.result {
+    margin-top: 3.2rem;
+
+    width: 40vw;
+    height: 20vh;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0.8rem;
+    border-radius: 4px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.result-intern {
+    display: flex;
+    flex-direction: column;
+
+    list-style: none;
+}
